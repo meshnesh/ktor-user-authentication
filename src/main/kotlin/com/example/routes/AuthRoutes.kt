@@ -3,6 +3,8 @@ package com.example.routes
 import com.example.repository.user.UserRepository
 import com.example.models.CreateUserParams
 import com.example.models.UserLoginParams
+import com.example.utils.LoginSuccessResponse
+import com.example.utils.SuccessResponse
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
@@ -14,13 +16,13 @@ fun Application.authRoutes(userRepository: UserRepository) {
             post ( "/register" ) {
                 val params = call.receive<CreateUserParams>()
                 val result = userRepository.registerUser(params)
-                call.respond(result)
+                call.respond(SuccessResponse(params, result.message))
             }
 
             post("/login") {
                 val params = call.receive<UserLoginParams>()
                 val result = userRepository.loginUser(params)
-                call.respond(result) //result.statusCode, to be added when we switch back to json response
+                call.respond(LoginSuccessResponse(params, result.message))
             }
         }
     }

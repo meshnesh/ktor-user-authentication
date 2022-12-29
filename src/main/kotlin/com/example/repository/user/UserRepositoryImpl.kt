@@ -2,41 +2,31 @@ package com.example.repository.user
 
 import com.example.models.CreateUserParams
 import com.example.models.UserLoginParams
-import com.example.security.JwtConfig
 import com.example.service.UserService
 import com.example.utils.*
 
 class UserRepositoryImpl(
     private val userService: UserService
 ) : UserRepository {
-    override suspend fun registerUser(params: CreateUserParams): String {
+    override suspend fun registerUser(params: CreateUserParams): SuccessResponse {
         return if (isEmailExist(params.email)) {
-            MESSAGE_EMAIL_ALREADY_REGISTERED
-//            BaseResponse.ErrorResponse(message = "Email Already Exists")
+            SuccessResponse(params, MESSAGE_EMAIL_ALREADY_REGISTERED)
         } else {
             val user = userService.registerUser(params)
             if (user != null) {
-                val token = JwtConfig.instance.createAccessToken(user.id)
-                user.authToken = token
-                USER_REGISTRATION_SUCCESS
-//                BaseResponse.SuccessResponse(data = user, message = "User successfully registered")
+                SuccessResponse(params, USER_REGISTRATION_SUCCESS)
             } else {
-                GENERIC_ERROR
-//                BaseResponse.ErrorResponse(message = "SomeThing Went Wrong")
+                SuccessResponse(params, GENERIC_ERROR)
             }
         }
     }
 
-    override suspend fun loginUser(params: UserLoginParams): String {
+    override suspend fun loginUser(params: UserLoginParams): LoginSuccessResponse {
         val user = userService.loginUser(params.email, params.password)
         return if (user != null) {
-//            val token = JwtConfig.instance.createAccessToken(user.id)
-//            user.authToken = token
-            USER_LOGIN_SUCCESS
-//            BaseResponse.SuccessResponse(data = user, message = USER_LOGIN_SUCCESS)
+            LoginSuccessResponse(params, USER_LOGIN_SUCCESS)
         } else {
-            USER_LOGIN_FAILURE
-//            BaseResponse.ErrorResponse(USER_LOGIN_FAILURE)
+            LoginSuccessResponse(params, USER_LOGIN_FAILURE)
         }
     }
 

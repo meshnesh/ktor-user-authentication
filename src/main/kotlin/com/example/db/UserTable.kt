@@ -13,7 +13,7 @@ object UserTable: Table("usersAuth") {
     var password = text("password")
     var createdAt = datetime("createdAt").clientDefault { LocalDateTime.now() }
     var joinDate = varchar("joinDate", 256)
-    var isAdmin = bool("isAdmin")
+    var isAdmin = bool("isAdmin").default(false)
     var role = varchar("role", 20)
 
     override var primaryKey = PrimaryKey(id)
