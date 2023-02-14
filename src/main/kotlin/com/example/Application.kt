@@ -50,7 +50,7 @@ fun Application.module() {
 
     routing {
         get("/") {
-            call.respondText("Hello, world!")
+            call.respondText("Testing this")
         }
     }
 }
