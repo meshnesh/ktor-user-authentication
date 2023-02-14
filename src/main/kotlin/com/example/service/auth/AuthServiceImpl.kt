@@ -1,18 +1,17 @@
-package com.example.service
+package com.example.service.auth
 
 import com.example.db.DataBaseFactory.dbQuery
-import com.example.db.UserTable
+import com.example.db.schemas.UserTable
 import com.example.db.extensions.toUser
-import com.example.models.CreateUserParams
-import com.example.models.User
+import com.example.models.auth.CreateUserParams
+import com.example.models.user.User
 import com.example.security.hash
-import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.statements.InsertStatement
 
-class UserServiceImpl : UserService {
+class AuthServiceImpl : AuthService {
     override suspend fun registerUser(params: CreateUserParams): User? {
         var statement: InsertStatement<Number>? = null
         dbQuery {

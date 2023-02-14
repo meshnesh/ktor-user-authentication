@@ -1,8 +1,8 @@
-package com.example.models
+package com.example.models.auth
 
 import kotlinx.serialization.Serializable
 
-@Serializable
+
 data class CreateUserParams(
     val fullName: String,
     val idNo: String,
