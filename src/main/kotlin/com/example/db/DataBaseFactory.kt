@@ -11,6 +11,7 @@ import kotlinx.coroutines.withContext
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
+import java.net.URI
 
 object DataBaseFactory {
 
@@ -26,14 +27,20 @@ object DataBaseFactory {
 
     private fun hikari(): HikariDataSource{
         val config = HikariConfig()
-        config.driverClassName = "org.postgresql.Driver"
-//        config.jdbcUrl= "jdbc:postgresql:testingusers?user=t&password=1234"
+        config.driverClassName = System.getenv("JDBC_DRIVER")
+//        config.jdbcUrl= System.getenv("DATABASE_URL")
         config.maximumPoolSize = 3
         config.isAutoCommit = false
         config.transactionIsolation = "TRANSACTION_REPEATABLE_READ"
         config.validate()
-        config.jdbcUrl= "jdbc:postgresql://knjhdahpscmuxl:51b46fd9f307eda51a2340dd297b4fced1431ff2511893c632534928c87288cd@ec2-44-199-143-43.compute-1.amazonaws.com:5432/d5ovidmele2ehi?user=t&password=1234"
+//        config.jdbcUrl= "jdbc:postgresql://knjhdahpscmuxl:51b46fd9f307eda51a2340dd297b4fced1431ff2511893c632534928c87288cd@ec2-44-199-143-43.compute-1.amazonaws.com:5432/d5ovidmele2ehi?user=t&password=1234"
 
+        val uri = URI(System.getenv("DATABASE_URL"))
+        val username = uri.userInfo.split(":").toTypedArray()[0]
+        val password = uri.userInfo.split(":").toTypedArray()[1]
+
+        config.jdbcUrl =
+            "jdbc:postgresql://" + uri.host + ":" + uri.port + uri.path + "?sslmode=require" + "&user=$username&password=$password"
 
 
         return HikariDataSource(config)
