@@ -40,8 +40,8 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-dao:0.40.1")
     implementation("org.jetbrains.exposed:exposed-jdbc:0.40.1")
     implementation("org.jetbrains.exposed:exposed-java-time:0.40.1")
-    implementation("org.postgresql:postgresql:42.5.1")
-    implementation("com.zaxxer:HikariCP:5.0.1")
+    implementation("org.postgresql:postgresql:42.2.18")
+    implementation("com.zaxxer:HikariCP:4.0.3")
 
     implementation ("io.ktor:ktor-client-core:$ktor_version")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1")
