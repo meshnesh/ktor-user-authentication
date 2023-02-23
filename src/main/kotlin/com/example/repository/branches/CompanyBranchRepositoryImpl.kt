@@ -1,9 +1,8 @@
 package com.example.repository.branches
 
 import com.example.base.BaseResponse
-import com.example.models.common.PaginatedResult
-import com.example.models.companyBranch.CompanyBranch
-import com.example.service.companyBranch.CompanyBranchService
+import com.example.models.company.companyBranch.CompanyBranchPayload
+import com.example.service.company.companyBranch.CompanyBranchService
 import com.example.utils.GENERIC_ERROR
 import com.example.utils.PRODUCT_DELETE_SUCCESS
 import com.example.utils.PRODUCT_UPDATE_SUCCESS
@@ -12,7 +11,7 @@ import com.example.utils.SUCCESS
 class CompanyBranchRepositoryImpl(
     private val companyBranchService: CompanyBranchService
 ) : CompanyBranchRepository {
-    override suspend fun createCompanyBranch(params: CompanyBranch): BaseResponse<Any> {
+    override suspend fun createCompanyBranch(params: CompanyBranchPayload): BaseResponse<Any> {
         val companyBranch = companyBranchService.createCompanyBranch(params)
         return if (companyBranch != null) {
             BaseResponse.SuccessResponse(data = companyBranch, message = SUCCESS)
@@ -21,7 +20,7 @@ class CompanyBranchRepositoryImpl(
         }
     }
 
-    override suspend fun editCompanyBranch(id: Int, companyBranch: CompanyBranch): BaseResponse<Any> {
+    override suspend fun editCompanyBranch(id: Int, companyBranch: CompanyBranchPayload): BaseResponse<Any> {
         if (companyBranchService.editCompanyBranch(id, companyBranch)) {
             return BaseResponse.SuccessResponse(data = companyBranch, message = PRODUCT_UPDATE_SUCCESS)
         }

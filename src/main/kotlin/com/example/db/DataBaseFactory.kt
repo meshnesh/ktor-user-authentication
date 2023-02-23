@@ -1,9 +1,13 @@
 package com.example.db
 
-import com.example.db.schemas.AvailableProductsTable
-import com.example.db.schemas.BranchesTable
-import com.example.db.schemas.PurchasedProductsTable
 import com.example.db.schemas.UserTable
+import com.example.db.schemas.companySchema.CompanyBranchTable
+import com.example.db.schemas.customers.CustomerTable
+import com.example.db.schemas.invoice.InvoiceTable
+import com.example.db.schemas.orders.OrdersTable
+import com.example.db.schemas.productsSchema.ProductsTable
+import com.example.db.schemas.productsSchema.PurchasedProductsTable
+import com.example.db.schemas.sales.SalesTable
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import kotlinx.coroutines.Dispatchers
@@ -19,20 +23,27 @@ object DataBaseFactory {
         Database.connect(hikari())
         transaction {
             SchemaUtils.create(UserTable)
-            SchemaUtils.create(AvailableProductsTable)
+            SchemaUtils.create(ProductsTable)
             SchemaUtils.create(PurchasedProductsTable)
-            SchemaUtils.create(BranchesTable)
+            SchemaUtils.create(CompanyBranchTable)
+            SchemaUtils.create(CustomerTable)
+            SchemaUtils.create(InvoiceTable)
+            SchemaUtils.create(OrdersTable)
+            SchemaUtils.create(SalesTable)
+            SchemaUtils.create(CompanyBranchTable)
+            SchemaUtils.create(CompanyBranchTable)
         }
     }
 
-    private fun hikari(): HikariDataSource{
+    private fun hikari(): HikariDataSource {
         val config = HikariConfig()
         val uri = URI(System.getenv("DATABASE_URL"))
         val username = uri.userInfo.split(":").toTypedArray()[0]
         val password = uri.userInfo.split(":").toTypedArray()[1]
 
         config.driverClassName = System.getenv("JDBC_DRIVER")
-        config.jdbcUrl = "jdbc:postgresql://" + uri.host + ":" + uri.port + uri.path + "?sslmode=require" + "&user=$username&password=$password"
+        config.jdbcUrl = System.getenv("LOCAL_DB_URL") //when pushing to main change this
+
         config.maximumPoolSize = 3
         config.isAutoCommit = false
         config.transactionIsolation = "TRANSACTION_REPEATABLE_READ"

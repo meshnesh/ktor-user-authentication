@@ -1,8 +1,7 @@
 package com.example.routes.products
 
-import com.example.models.product.AvailableProducts
-import com.example.repository.products.AvailableProductsRepository
-import com.example.security.UserIdPrincipalForUser
+import com.example.models.product.AvailableProductsPayload
+import com.example.repository.products.ProductsRepository
 import com.example.utils.DEFAULT_LIMIT_SIZE
 import com.example.utils.DEFAULT_PAGE_START
 import io.ktor.server.application.*
@@ -11,7 +10,7 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
-fun Application.configureProductRoutes(repository: AvailableProductsRepository) {
+fun Application.configureProductRoutes(repository: ProductsRepository) {
     routing {
         authenticate {
             route("products") {
@@ -24,14 +23,14 @@ fun Application.configureProductRoutes(repository: AvailableProductsRepository) 
                 }
 
                 post("add-products") {
-                    val params = call.receive<AvailableProducts>()
+                    val params = call.receive<AvailableProductsPayload>()
                     val result = repository.addProducts(params)
                     call.respond(result.statusCode, result)
                 }
 
                 put("update-product/{id}") {
                     val id = call.parameters["id"]?.toIntOrNull() ?: -1
-                    val params = call.receive<AvailableProducts>()
+                    val params = call.receive<AvailableProductsPayload>()
                     val result = repository.update(id, params)
                     call.respond(result.statusCode, result)
                 }

@@ -10,6 +10,12 @@ const val PRODUCT_UPDATE_SUCCESS = "Successfully updated the product"
 const val PRODUCT_DELETE_SUCCESS = "Successfully deleted the product"
 const val INVALID_AUTHENTICATION_TOKEN = "Invalid authentication token, please login again"
 const val INVALID_ROLE = "Invalid authentication your role cannot add users"
+const val COMPANY_CREATION_SUCCESS = "Successfully Created the Company"
+const val COMPANY_UPDATE_SUCCESS = "Successfully updated the Company"
+const val COMPANY_DELETE_SUCCESS = "Successfully deleted the Company"
+const val CUSTOMER_CREATION_SUCCESS = "Successfully Created the Customer"
+const val CUSTOMER_UPDATE_SUCCESS = "Successfully updated the Customer"
+const val CUSTOMER_DELETE_SUCCESS = "Successfully deleted the Customer"
 
 const val SUCCESS = "Success"
 
