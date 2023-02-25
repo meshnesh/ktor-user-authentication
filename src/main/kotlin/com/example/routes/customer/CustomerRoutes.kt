@@ -21,7 +21,7 @@ fun Application.configureCustomerRoutes(repository: CustomerRepository) {
                     call.respond(result.statusCode, result)
                 }
 
-                post("add-company") {
+                post("add-customer") {
                     val params = call.receive<CustomerPayload>()
                     val result = repository.createCustomer(params)
                     call.respond(result.statusCode, result)

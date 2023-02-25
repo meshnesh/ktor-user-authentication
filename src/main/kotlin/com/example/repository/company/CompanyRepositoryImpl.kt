@@ -10,13 +10,13 @@ class CompanyRepositoryImpl( private val companyService: CompanyService) : Compa
         return BaseResponse.SuccessResponse(data = companyService.getAllCompanies(page, limit), message = SUCCESS)
     }
 
-    override suspend fun createCompany(companyPayload: CompanyPayload): BaseResponse<Any> {
-        val company = companyService.createCompany(companyPayload)
+    override suspend fun createCompany(userId: Int, companyPayload: CompanyPayload): BaseResponse<Any> {
+        val company = companyService.createCompany(userId, companyPayload)
         return if (company != null) BaseResponse.SuccessResponse(data = company, message = COMPANY_CREATION_SUCCESS) else BaseResponse.ErrorResponse(message = GENERIC_ERROR)
     }
 
-    override suspend fun updateCompany(companyId: Int, companyPayload: CompanyPayload): BaseResponse<Any> {
-        return if (companyService.updateCompany(companyId, companyPayload)) {
+    override suspend fun updateCompany(companyId: Int, userId: Int, companyPayload: CompanyPayload): BaseResponse<Any> {
+        return if (companyService.updateCompany(companyId, userId, companyPayload)) {
             BaseResponse.SuccessResponse(data = companyPayload, message = COMPANY_UPDATE_SUCCESS)
         } else BaseResponse.ErrorResponse(message = GENERIC_ERROR)
 

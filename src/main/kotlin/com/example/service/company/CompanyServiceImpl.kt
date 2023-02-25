@@ -2,7 +2,10 @@ package com.example.service.company
 
 import com.example.db.DataBaseFactory
 import com.example.db.extensions.toCompany
-import com.example.db.schemas.companySchema.CompanyTable
+import com.example.db.extensions.toStaff
+import com.example.db.extensions.toUser
+import com.example.db.schemas.UserTable
+import com.example.db.schemas.companySchema.CompanyDbTable
 import com.example.models.common.PaginatedResult
 import com.example.models.company.CompanyPayload
 import org.jetbrains.exposed.sql.*
@@ -15,8 +18,8 @@ class CompanyServiceImpl : CompanyService {
         var nextPage: Long? = null
 
         val company = DataBaseFactory.dbQuery {
-            CompanyTable
-                .selectAll().orderBy(CompanyTable.companyName, SortOrder.DESC).also {
+            CompanyDbTable
+                .selectAll().orderBy(CompanyDbTable.companyName, SortOrder.DESC).also {
                     pageCount = it.count() / limit
                     if (page < pageCount)
                         nextPage = page + 1L
@@ -26,10 +29,14 @@ class CompanyServiceImpl : CompanyService {
         return PaginatedResult(pageCount, nextPage, company)
     }
 
-    override suspend fun createCompany(companyPayload: CompanyPayload): CompanyPayload? {
+    override suspend fun createCompany(userId: Int, companyPayload: CompanyPayload): CompanyPayload? {
         var statement: InsertStatement<Number>? = null
+
         DataBaseFactory.dbQuery {
-            statement = CompanyTable.insert {
+            val userRow =  UserTable.select { UserTable.id eq userId }.first()
+
+            statement = CompanyDbTable.insert {
+                it[this.userId] = userRow.toUser()!!.id
                 it[companyName] = companyPayload.companyName
                 it[companySubscription] = companyPayload.companySubscription
                 it[companySubscriptionStatus] = companyPayload.companySubscriptionStatus
@@ -38,10 +45,13 @@ class CompanyServiceImpl : CompanyService {
         return statement?.resultedValues?.get(0).toCompany()
     }
 
-    override suspend fun updateCompany(companyId: Int, companyPayload: CompanyPayload): Boolean {
+    override suspend fun updateCompany(companyId: Int, userId: Int, companyPayload: CompanyPayload): Boolean {
         var result = -1
         DataBaseFactory.dbQuery {
-            result = CompanyTable.update({ CompanyTable.companyId eq companyId }) {
+            val userRow =  UserTable.select { UserTable.id eq userId }.first()
+
+            result = CompanyDbTable.update({ CompanyDbTable.companyId eq companyId }) {
+                it[this.userId] = userRow.toStaff()!!.id
                 it[companyName] = companyPayload.companyName
                 it[companySubscription] = companyPayload.companySubscription
                 it[companySubscriptionStatus] = companyPayload.companySubscriptionStatus
@@ -53,7 +63,7 @@ class CompanyServiceImpl : CompanyService {
     override suspend fun deleteCompany(companyId: Int): Boolean {
         var result = -1
         DataBaseFactory.dbQuery {
-            result = CompanyTable.deleteWhere { CompanyTable.companyId eq companyId}
+            result = CompanyDbTable.deleteWhere { CompanyDbTable.companyId eq companyId}
         }
         return result == 1
     }

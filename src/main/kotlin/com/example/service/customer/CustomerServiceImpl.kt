@@ -30,9 +30,10 @@ class CustomerServiceImpl : CustomerService {
         var statement: InsertStatement<Number>? = null
         DataBaseFactory.dbQuery {
             statement = CustomerTable.insert {
+                it[companyId] = customerPayload.companyId
                 it[customerName] = customerPayload.customerName
                 it[customerPhoneNumber] = customerPayload.customerPhoneNumber
-                it[customerAddress] = customerAddress
+                it[customerAddress] = customerPayload.customerAddress
             }
         }
         return statement?.resultedValues?.get(0).toCustomer()
@@ -42,9 +43,10 @@ class CustomerServiceImpl : CustomerService {
         var result = -1
         DataBaseFactory.dbQuery {
             result = CustomerTable.update({ CustomerTable.customerId eq customerId }) {
+                it[companyId] = customerPayload.companyId
                 it[customerName] = customerPayload.customerName
                 it[customerPhoneNumber] = customerPayload.customerPhoneNumber
-                it[customerAddress] = customerAddress
+                it[customerAddress] = customerPayload.customerAddress
             }
         }
         return result == 1

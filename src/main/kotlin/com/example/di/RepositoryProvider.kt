@@ -16,6 +16,8 @@ import com.example.repository.products.ProductsRepository
 import com.example.repository.products.ProductsRepositoryImpl
 import com.example.repository.sales.SalesRepository
 import com.example.repository.sales.SalesRepositoryImpl
+import com.example.repository.staff.StaffRepository
+import com.example.repository.staff.StaffRepositoryImpl
 import com.example.repository.user.UserRepository
 import com.example.repository.user.UserRepositoryImpl
 import com.example.service.auth.AuthServiceImpl
@@ -26,6 +28,7 @@ import com.example.service.invoice.InvoiceServiceImpl
 import com.example.service.orders.OrdersServiceImpl
 import com.example.service.products.ProductsServiceImpl
 import com.example.service.sales.SalesServiceImpl
+import com.example.service.staff.StaffServiceImpl
 import com.example.service.user.UserServiceImpl
 
 object RepositoryProvider {
@@ -38,4 +41,5 @@ object RepositoryProvider {
     fun provideInvoiceRepository(): InvoiceRepository = InvoiceRepositoryImpl(InvoiceServiceImpl())
     fun provideOrdersRepository(): OrdersRepository = OrdersRepositoryImpl(OrdersServiceImpl())
     fun provideSalesRepository(): SalesRepository = SalesRepositoryImpl(SalesServiceImpl())
+    fun provideStaffRepository(): StaffRepository = StaffRepositoryImpl(StaffServiceImpl())
 }

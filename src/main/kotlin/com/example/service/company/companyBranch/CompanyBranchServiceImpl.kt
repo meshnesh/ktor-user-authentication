@@ -15,6 +15,7 @@ class CompanyBranchServiceImpl : CompanyBranchService {
         var statement: InsertStatement<Number>? = null
         DataBaseFactory.dbQuery {
             statement = CompanyBranchTable.insert {
+                it[companyId] = params.companyId
                 it[branchName] = params.branchName
                 it[branchLocation] = params.branchLocation
             }
@@ -26,6 +27,7 @@ class CompanyBranchServiceImpl : CompanyBranchService {
         var result = -1
         DataBaseFactory.dbQuery {
             result = CompanyBranchTable.update({ CompanyBranchTable.branchId eq id }) {
+                it[companyId] = companyBranch.companyId
                 it[branchName] = companyBranch.branchName
                 it[branchLocation] = companyBranch.branchLocation
             }

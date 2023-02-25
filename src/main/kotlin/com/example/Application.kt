@@ -11,6 +11,7 @@ import com.example.routes.invoice.configureInvoiceRoutes
 import com.example.routes.order.configureOrderRoutes
 import com.example.routes.products.configureProductRoutes
 import com.example.routes.sale.configureSalesRoutes
+import com.example.routes.staff.configureStaffRoutes
 import com.example.routes.user.configureUserRoutes
 import com.example.security.configureSecurity
 import io.ktor.server.application.*
@@ -54,6 +55,7 @@ fun Application.module() {
     configureInvoiceRoutes(RepositoryProvider.provideInvoiceRepository())
     configureOrderRoutes(RepositoryProvider.provideOrdersRepository())
     configureSalesRoutes(RepositoryProvider.provideSalesRepository())
+    configureStaffRoutes(RepositoryProvider.provideStaffRepository())
 
     routing {
         get("/") {

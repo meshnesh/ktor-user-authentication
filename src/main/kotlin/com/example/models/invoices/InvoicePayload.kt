@@ -1,6 +1,8 @@
 package com.example.models.invoices
 
 data class InvoicePayload(
+    val companyId: Int,
+    val staffId: Int,
     val invoiceId: Int,
     val invoiceName: String,
     val invoiceNumber: String,

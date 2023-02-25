@@ -1,6 +1,7 @@
 package com.example.models.product
 
 data class AvailableProductsPayload(
+    val companyId: Int,
     val productId: Int,
     val productName: String,
     val productDescription: String,

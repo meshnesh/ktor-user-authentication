@@ -2,6 +2,7 @@ package com.example.db
 
 import com.example.db.schemas.UserTable
 import com.example.db.schemas.companySchema.CompanyBranchTable
+import com.example.db.schemas.companySchema.CompanyDbTable
 import com.example.db.schemas.customers.CustomerTable
 import com.example.db.schemas.invoice.InvoiceTable
 import com.example.db.schemas.orders.OrdersTable
@@ -25,13 +26,12 @@ object DataBaseFactory {
             SchemaUtils.create(UserTable)
             SchemaUtils.create(ProductsTable)
             SchemaUtils.create(PurchasedProductsTable)
+            SchemaUtils.create(CompanyDbTable)
             SchemaUtils.create(CompanyBranchTable)
             SchemaUtils.create(CustomerTable)
             SchemaUtils.create(InvoiceTable)
             SchemaUtils.create(OrdersTable)
             SchemaUtils.create(SalesTable)
-            SchemaUtils.create(CompanyBranchTable)
-            SchemaUtils.create(CompanyBranchTable)
         }
     }
 

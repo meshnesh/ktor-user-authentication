@@ -30,6 +30,7 @@ class ProductsServiceImpl : ProductsService {
         var statement: InsertStatement<Number>? = null
         dbQuery {
             statement = ProductsTable.insert {
+                it[companyId] = availableProductsPayload.companyId
                 it[productName] = availableProductsPayload.productName
                 it[productDescription] = availableProductsPayload.productDescription
                 it[productPrice] = availableProductsPayload.productPrice
@@ -45,6 +46,7 @@ class ProductsServiceImpl : ProductsService {
         var result = -1
         dbQuery {
             result = ProductsTable.update({ ProductsTable.productId eq productId }) {
+                it[companyId] = availableProductsPayload.companyId
                 it[productName] = availableProductsPayload.productName
                 it[productDescription] = availableProductsPayload.productDescription
                 it[productPrice] = availableProductsPayload.productPrice

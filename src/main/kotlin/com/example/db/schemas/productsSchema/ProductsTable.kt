@@ -1,8 +1,11 @@
 package com.example.db.schemas.productsSchema
 
+import com.example.db.schemas.companySchema.CompanyDbTable
+import org.jetbrains.exposed.sql.ReferenceOption
 import org.jetbrains.exposed.sql.Table
 
 object ProductsTable : Table("ProductsTable") {
+    val companyId = integer("companyId").references(ref = CompanyDbTable.companyId, onDelete = ReferenceOption.CASCADE)
     val productId = integer("productId").autoIncrement()
     val productName = varchar("productName", 30)
     val productDescription = varchar("productDescription", 256)

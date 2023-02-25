@@ -30,6 +30,8 @@ class InvoiceServiceImpl : InvoiceService {
         var statement: InsertStatement<Number>? = null
         DataBaseFactory.dbQuery {
             statement = InvoiceTable.insert {
+                it[companyId] = invoicePayload.companyId
+                it[staffId] = invoicePayload.staffId
                 it[invoiceName] = invoicePayload.invoiceName
                 it[invoiceNumber] = invoicePayload.invoiceNumber
                 it[invoiceDescription] = invoicePayload.invoiceDescription
@@ -47,6 +49,8 @@ class InvoiceServiceImpl : InvoiceService {
         var result = -1
         DataBaseFactory.dbQuery {
             result = InvoiceTable.update({ InvoiceTable.invoiceId eq invoiceId }) {
+                it[companyId] = invoicePayload.companyId
+                it[staffId] = invoicePayload.staffId
                 it[invoiceName] = invoicePayload.invoiceName
                 it[invoiceNumber] = invoicePayload.invoiceNumber
                 it[invoiceDescription] = invoicePayload.invoiceDescription

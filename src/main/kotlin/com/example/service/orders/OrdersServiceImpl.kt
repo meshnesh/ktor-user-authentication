@@ -30,6 +30,8 @@ class OrdersServiceImpl : OrdersService {
         var statement: InsertStatement<Number>? = null
         DataBaseFactory.dbQuery {
             statement = OrdersTable.insert {
+                it[companyId] = ordersPayload.companyId
+                it[staffId] = ordersPayload.staffId
                 it[orderName] = ordersPayload.orderName
                 it[orderDateTime] = ordersPayload.orderDateTime
                 it[orderTotalPrice] = ordersPayload.orderTotalPrice
@@ -43,6 +45,8 @@ class OrdersServiceImpl : OrdersService {
         var result = -1
         DataBaseFactory.dbQuery {
             result = OrdersTable.update({ OrdersTable.orderId eq orderId }) {
+                it[companyId] = ordersPayload.companyId
+                it[staffId] = ordersPayload.staffId
                 it[orderName] = ordersPayload.orderName
                 it[orderDateTime] = ordersPayload.orderDateTime
                 it[orderTotalPrice] = ordersPayload.orderTotalPrice

@@ -30,6 +30,8 @@ class SalesServiceImpl : SalesService {
         var statement: InsertStatement<Number>? = null
         DataBaseFactory.dbQuery {
             statement = SalesTable.insert {
+                it[companyId] = salesPayload.companyId
+                it[staffId] = salesPayload.staffId
                 it[saleName] = salesPayload.saleName
                 it[saleStatus] = salesPayload.saleStatus
                 it[saleDateTime] = salesPayload.saleDateTime
@@ -44,6 +46,8 @@ class SalesServiceImpl : SalesService {
         var result = -1
         DataBaseFactory.dbQuery {
             result = SalesTable.update({ SalesTable.saleId eq saleId }) {
+                it[companyId] = salesPayload.companyId
+                it[staffId] = salesPayload.staffId
                 it[saleName] = salesPayload.saleName
                 it[saleStatus] = salesPayload.saleStatus
                 it[saleDateTime] = salesPayload.saleDateTime
