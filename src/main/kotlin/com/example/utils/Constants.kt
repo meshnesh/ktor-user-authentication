@@ -16,6 +16,9 @@ const val COMPANY_DELETE_SUCCESS = "Successfully deleted the Company"
 const val CUSTOMER_CREATION_SUCCESS = "Successfully Created the Customer"
 const val CUSTOMER_UPDATE_SUCCESS = "Successfully updated the Customer"
 const val CUSTOMER_DELETE_SUCCESS = "Successfully deleted the Customer"
+const val STAFF_CREATION_SUCCESS = "Successfully Created the Staff Account"
+const val STAFF_UPDATE_SUCCESS = "Successfully updated the Staff Account"
+const val STAFF_DELETE_SUCCESS = "Successfully deleted the Staff Account"
 
 const val SUCCESS = "Success"
 

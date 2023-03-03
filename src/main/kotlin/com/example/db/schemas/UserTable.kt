@@ -4,7 +4,7 @@ import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.javatime.datetime
 import java.time.LocalDateTime
 
-object UserTable : Table("usersAuth") {
+object UserTable : Table("usersAuthTest1") {
     var id = integer("id").autoIncrement()
     var idNo = varchar("idNo", 20)
     var fullName = varchar("fullName", 256)

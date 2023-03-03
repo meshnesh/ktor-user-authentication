@@ -3,16 +3,15 @@ package com.example.models.staff
 data class CompanyStaff(
     val companyId: Int,
     val userId: Int,
-    val id: Int,
-    val idNo: String,
-    val firstName: String,
-    val lastName: String,
-    val avatar: String,
-    val email: String,
-    val password: String,
-    var authToken: String? = null,
-    val createdAt: String,
-    val joinDate: String,
-    val isAdmin: Boolean,
-    val role: String
+    val staffId: Int,
+    val staffIdNo: String,
+    val staffFirstName: String,
+    val staffLastName: String,
+    val staffAvatar: String,
+    val staffEmail: String,
+    val staffPassword: String,
+    val staffCreatedAt: String,
+    val staffJoinDate: String,
+    val staffIsAdmin: Boolean,
+    val staffRole: String
 )

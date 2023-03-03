@@ -14,6 +14,10 @@ class ProductsRepositoryImpl(
         return BaseResponse.SuccessResponse(data = productsService.getAvailableProducts(page, limit), message = SUCCESS)
     }
 
+    override suspend fun getCompanyProducts(companyId: Int, page: Int, limit: Int): BaseResponse<Any> {
+        return BaseResponse.SuccessResponse(data = productsService.getCompanyProducts(companyId, page, limit), message = SUCCESS)
+    }
+
     override suspend fun addProducts(availableProductsPayload: AvailableProductsPayload): BaseResponse<Any> {
         val product = productsService.add(availableProductsPayload)
         return if (product != null) {

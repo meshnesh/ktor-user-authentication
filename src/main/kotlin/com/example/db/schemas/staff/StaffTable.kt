@@ -2,28 +2,26 @@ package com.example.db.schemas.staff
 
 import com.example.db.schemas.UserTable
 import com.example.db.schemas.companySchema.CompanyDbTable
-import com.example.db.schemas.customers.CustomerTable
 import org.jetbrains.exposed.sql.ReferenceOption
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.javatime.datetime
 import java.time.LocalDateTime
 
-object StaffTable : Table("staffTableTest") {
+object StaffTable : Table("staffTableTestTest2") {
 
-    val companyId = CustomerTable.integer("companyId")
-        .references(ref = CompanyDbTable.companyId, onDelete = ReferenceOption.CASCADE)
-    val userId = integer("user_id").references(ref = UserTable.id, onDelete = ReferenceOption.CASCADE)
-    var id = integer("id").autoIncrement()
-    var idNo = varchar("idNo", 20)
-    var firstName = varchar("firstName", 256)
-    var lastName = varchar("lastName", 256)
-    var avatar = text("avatar")
-    var email = varchar("email", 256)
-    var password = text("password")
-    var createdAt = datetime("createdAt").clientDefault { LocalDateTime.now() }
-    var joinDate = varchar("joinDate", 256)
-    var isAdmin = bool("isAdmin").default(false)
-    var role = varchar("role", 20)
+    var staffId = integer("staffId").autoIncrement()
+    val companyId = integer("companyId").references(ref = CompanyDbTable.companyId, onDelete = ReferenceOption.CASCADE)
+    val userId = integer("id").references(ref = UserTable.id, onDelete = ReferenceOption.CASCADE)
+    var staffIdNo = varchar("staffIdNo", 20)
+    var staffFirstName = varchar("staffFirstName", 256)
+    var staffLastName = varchar("staffLastName", 256)
+    var staffAvatar = text("staffAvatar")
+    var staffEmail = varchar("staffEmail", 256)
+    var staffPassword = text("staffPassword")
+    var staffCreatedAt = datetime("staffCreatedAt").clientDefault { LocalDateTime.now() }
+    var staffJoinDate = varchar("staffJoinDate", 256)
+    var staffIsAdmin = bool("staffIsAdmin").default(false)
+    var staffRole = varchar("staffRole", 20)
 
-    override var primaryKey = PrimaryKey(id)
+    override var primaryKey = PrimaryKey(staffId)
 }

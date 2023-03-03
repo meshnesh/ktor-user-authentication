@@ -5,7 +5,7 @@ import com.example.db.schemas.UserTable
 import org.jetbrains.exposed.sql.ReferenceOption
 import org.jetbrains.exposed.sql.Table
 
-object CompanyDbTable : Table("companiesTestDbTable1") {
+object CompanyDbTable : Table("companiesTestDbTableTest1") {
     val companyId = integer("companyId").autoIncrement()
     val userId = integer("user_id").references(ref = UserTable.id, onDelete = ReferenceOption.CASCADE)
     val companyName = varchar("companyName", 30)

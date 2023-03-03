@@ -26,6 +26,22 @@ class ProductsServiceImpl : ProductsService {
         return PaginatedResult(pageCount, nextPage, availableProducts)
     }
 
+    override suspend fun getCompanyProducts (companyId: Int, page: Int, limit: Int): PaginatedResult<AvailableProductsPayload> {
+        var pageCount: Long = 0
+        var nextPage: Long? = null
+
+        val products = dbQuery {
+            ProductsTable
+                .select { ProductsTable.companyId eq companyId }.orderBy(ProductsTable.productName, SortOrder.DESC).also {
+                    pageCount = it.count() / limit
+                    if (page < pageCount)
+                        nextPage = page + 1L
+                }.limit(limit, (limit * page).toLong())
+                .mapNotNull { it.toAvailableProducts() }
+        }
+        return PaginatedResult(pageCount, nextPage, products)
+    }
+
     override suspend fun add(availableProductsPayload: AvailableProductsPayload): AvailableProductsPayload? {
         var statement: InsertStatement<Number>? = null
         dbQuery {

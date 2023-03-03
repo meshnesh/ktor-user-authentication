@@ -22,6 +22,14 @@ fun Application.configureProductRoutes(repository: ProductsRepository) {
                     call.respond(result.statusCode, result)
                 }
 
+                get("{companyId}/products") {
+                    val companyId = call.parameters["companyId"]?.toIntOrNull() ?: -1
+                    val page = call.parameters["page"]?.toIntOrNull() ?: DEFAULT_PAGE_START
+                    val limit = call.request.queryParameters["limit"]?.toIntOrNull() ?: DEFAULT_LIMIT_SIZE
+                    val result = repository.getCompanyProducts(companyId, page, limit)
+                    call.respond(result.statusCode, result)
+                }
+
                 post("add-products") {
                     val params = call.receive<AvailableProductsPayload>()
                     val result = repository.addProducts(params)

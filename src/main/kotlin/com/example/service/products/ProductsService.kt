@@ -5,6 +5,7 @@ import com.example.models.product.AvailableProductsPayload
 
 interface ProductsService {
     suspend fun getAvailableProducts(page: Int, limit: Int): PaginatedResult<AvailableProductsPayload>
+    suspend fun getCompanyProducts(companyId: Int, page: Int, limit: Int): PaginatedResult<AvailableProductsPayload>
     suspend fun add(availableProductsPayload: AvailableProductsPayload): AvailableProductsPayload?
     suspend fun update(productId: Int, availableProductsPayload: AvailableProductsPayload): Boolean
     suspend fun delete(productId: Int): Boolean

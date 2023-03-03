@@ -38,18 +38,18 @@ fun ResultRow?.toUser(): User? {
 fun ResultRow?.toStaff(): CompanyStaff? {
     return if (this == null) null
     else CompanyStaff(
-        id = this[StaffTable.id],
-        firstName = this[StaffTable.firstName],
-        lastName = this[StaffTable.lastName],
+        staffId = this[StaffTable.staffId],
+        staffFirstName = this[StaffTable.staffFirstName],
+        staffLastName = this[StaffTable.staffLastName],
         companyId = this[StaffTable.companyId],
-        avatar = this[StaffTable.avatar],
-        email = this[StaffTable.email],
-        createdAt = this[StaffTable.createdAt].toString(),
-        idNo = this[StaffTable.idNo],
-        isAdmin = this[StaffTable.isAdmin],
-        role = this[StaffTable.role],
-        joinDate = this[StaffTable.joinDate],
-        password = this[StaffTable.password],
+        staffAvatar = this[StaffTable.staffAvatar],
+        staffEmail = this[StaffTable.staffEmail],
+        staffCreatedAt = this[StaffTable.staffCreatedAt].toString(),
+        staffIdNo = this[StaffTable.staffIdNo],
+        staffIsAdmin = this[StaffTable.staffIsAdmin],
+        staffRole = this[StaffTable.staffRole],
+        staffJoinDate = this[StaffTable.staffJoinDate],
+        staffPassword = this[StaffTable.staffPassword],
         userId = this[StaffTable.userId]
     )
 }
@@ -93,8 +93,8 @@ fun ResultRow?.toOrders(): OrdersPayload? {
     return if (this==null) null
     else OrdersPayload (
         companyId = this[OrdersTable.companyId],
-        staffId = this[OrdersTable.staffId],
         orderId = this[OrdersTable.orderId],
+        staffId = this[OrdersTable.staffId],
         orderName = this[OrdersTable.orderName],
         orderDateTime = this[OrdersTable.orderDateTime],
         orderTotalPrice = this[OrdersTable.orderTotalPrice],
@@ -124,6 +124,7 @@ fun ResultRow?.toSales(): SalesPayload? {
     else SalesPayload (
         companyId = this[SalesTable.companyId],
         staffId = this[SalesTable.staffId],
+        orderId = this[SalesTable.orderId],
         saleId = this[SalesTable.saleId],
         saleName = this[SalesTable.saleName],
         saleDateTime = this[SalesTable.saleDateTime],

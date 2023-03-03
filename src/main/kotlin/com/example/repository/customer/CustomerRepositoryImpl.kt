@@ -26,7 +26,7 @@ class CustomerRepositoryImpl(private val customerService: CustomerService) : Cus
 
     override suspend fun deleteCustomer(customerId: Int): BaseResponse<Any> {
         return if (customerService.deleteCustomer(customerId)) {
-            BaseResponse.SuccessResponse(data = null, message = COMPANY_DELETE_SUCCESS)
+            BaseResponse.SuccessResponse(data = null, message = CUSTOMER_DELETE_SUCCESS)
         } else BaseResponse.ErrorResponse(message = GENERIC_ERROR)
     }
 }

@@ -51,7 +51,7 @@ class CompanyServiceImpl : CompanyService {
             val userRow =  UserTable.select { UserTable.id eq userId }.first()
 
             result = CompanyDbTable.update({ CompanyDbTable.companyId eq companyId }) {
-                it[this.userId] = userRow.toStaff()!!.id
+                it[this.userId] = userRow.toStaff()!!.userId
                 it[companyName] = companyPayload.companyName
                 it[companySubscription] = companyPayload.companySubscription
                 it[companySubscriptionStatus] = companyPayload.companySubscriptionStatus

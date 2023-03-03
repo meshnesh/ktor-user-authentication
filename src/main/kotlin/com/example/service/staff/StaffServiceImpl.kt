@@ -2,6 +2,7 @@ package com.example.service.staff
 
 import com.example.db.DataBaseFactory
 import com.example.db.extensions.toStaff
+import com.example.db.extensions.toUser
 import com.example.db.schemas.UserTable
 import com.example.db.schemas.companySchema.CompanyDbTable
 import com.example.db.schemas.staff.StaffTable
@@ -19,7 +20,7 @@ class StaffServiceImpl : StaffService {
 
         val staff = DataBaseFactory.dbQuery {
             StaffTable
-                .selectAll().orderBy(StaffTable.firstName, SortOrder.DESC).also {
+                .selectAll().orderBy(StaffTable.staffFirstName, SortOrder.DESC).also {
                     pageCount = it.count() / limit
                     if (page < pageCount)
                         nextPage = page + 1L
@@ -36,17 +37,17 @@ class StaffServiceImpl : StaffService {
             val userRow =  UserTable.select { UserTable.id eq userId }.first()
 
             statement = StaffTable.insert {
-                it[this.userId] = userRow.toStaff()!!.id
+                it[this.userId] = userRow.toUser()!!.id
                 it[companyId] = staff.companyId
-                it[email] = staff.email
-                it[password] = hash(staff.password)
-                it[firstName] = staff.firstName
-                it[lastName] = staff.lastName
-                it[UserTable.joinDate] = staff.joinDate
-                it[UserTable.isAdmin] = staff.isAdmin
-                it[UserTable.role] = staff.role
-                it[UserTable.idNo] = staff.idNo
-                it[UserTable.avatar] = staff.avatar
+                it[staffEmail] = staff.staffEmail
+                it[staffPassword] = hash(staff.staffPassword)
+                it[staffFirstName] = staff.staffFirstName
+                it[staffLastName] = staff.staffLastName
+                it[staffJoinDate] = staff.staffJoinDate
+                it[staffIsAdmin] = staff.staffIsAdmin
+                it[staffRole] = staff.staffRole
+                it[staffIdNo] = staff.staffIdNo
+                it[staffAvatar] = staff.staffAvatar
             }
         }
         return statement?.resultedValues?.get(0).toStaff()
@@ -57,18 +58,18 @@ class StaffServiceImpl : StaffService {
         DataBaseFactory.dbQuery {
             val userRow =  UserTable.select { UserTable.id eq userId }.first()
 
-            result = StaffTable.update({ StaffTable.id eq staffId }) {
-                it[this.userId] = userRow.toStaff()!!.id
+            result = StaffTable.update({ StaffTable.staffId eq staffId }) {
+                it[this.userId] = userRow.toStaff()!!.userId
                 it[companyId] = staff.companyId
-                it[email] = staff.email
-                it[password] = hash(staff.password)
-                it[firstName] = staff.firstName
-                it[lastName] = staff.lastName
-                it[joinDate] = staff.joinDate
-                it[isAdmin] = staff.isAdmin
-                it[role] = staff.role
-                it[idNo] = staff.idNo
-                it[avatar] = staff.avatar
+                it[staffIdNo] = staff.staffIdNo
+                it[staffFirstName] = staff.staffFirstName
+                it[staffLastName] = staff.staffLastName
+                it[staffAvatar] = staff.staffAvatar
+                it[staffEmail] = staff.staffEmail
+                it[staffPassword] = hash(staff.staffPassword)
+                it[staffJoinDate] = staff.staffJoinDate
+                it[staffIsAdmin] = staff.staffIsAdmin
+                it[staffRole] = staff.staffRole
             }
         }
         return result == 1

@@ -4,7 +4,7 @@ import com.example.db.schemas.UserTable
 import org.jetbrains.exposed.sql.ReferenceOption
 import org.jetbrains.exposed.sql.Table
 
-object PurchasedProductsTable : Table("purchasedProducts") {
+object PurchasedProductsTable : Table("purchasedProductsTest1") {
     val productId = integer("id").autoIncrement()
     val productName = varchar("productName", 30)
     val productDescription = varchar("productDescription", 256)
