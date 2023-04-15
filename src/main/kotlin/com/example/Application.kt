@@ -3,16 +3,20 @@ package com.example
 import com.example.config.configureAuthRouting
 import com.example.config.configureContentNegotiation
 import com.example.config.configureDatabase
-import com.example.db.DataBaseFactory
 import com.example.di.RepositoryProvider
-import io.ktor.server.engine.*
-import io.ktor.server.netty.*
-import com.example.plugins.*
-import com.example.routes.products.configureProductRoutes
-import com.example.routes.user.configureUserRoutes
+import com.example.plugins.configureRouting
+import com.example.routes.blogs.story.configureStoryRoutes
+import com.example.routes.blogs.user.configureBlogUserRoutes
+import com.example.routes.inventorysystem.company.configureCompanyRoutes
+import com.example.routes.inventorysystem.customer.configureCustomerRoutes
+import com.example.routes.inventorysystem.invoice.configureInvoiceRoutes
+import com.example.routes.inventorysystem.order.configureOrderRoutes
+import com.example.routes.inventorysystem.products.configureProductRoutes
+import com.example.routes.inventorysystem.sale.configureSalesRoutes
+import com.example.routes.inventorysystem.staff.configureStaffRoutes
+import com.example.routes.inventorysystem.user.configureUserRoutes
 import com.example.security.configureSecurity
 import io.ktor.server.application.*
-import io.ktor.server.auth.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
@@ -26,6 +30,7 @@ import io.ktor.server.routing.*
 //        configureAuthRouting()
 //        configureUserRoutes(RepositoryProvider.provideUserRepository())
 //        configureProductRoutes(RepositoryProvider.provideAvailableProductsRepository())
+//configureCompanyRoutes(RepositoryProvider.provideCompanyRepository())
 //
 //        routing {
 //            authenticate {
@@ -46,7 +51,15 @@ fun Application.module() {
     configureRouting()
     configureAuthRouting()
     configureUserRoutes(RepositoryProvider.provideUserRepository())
-    configureProductRoutes(RepositoryProvider.provideAvailableProductsRepository())
+    configureProductRoutes(RepositoryProvider.provideProductsRepository())
+    configureCompanyRoutes(RepositoryProvider.provideCompanyRepository())
+    configureCustomerRoutes(RepositoryProvider.provideCustomerRepository())
+    configureInvoiceRoutes(RepositoryProvider.provideInvoiceRepository())
+    configureOrderRoutes(RepositoryProvider.provideOrdersRepository())
+    configureSalesRoutes(RepositoryProvider.provideSalesRepository())
+    configureStaffRoutes(RepositoryProvider.provideStaffRepository())
+    configureStoryRoutes(RepositoryProvider.provideStoryRepository())
+    configureBlogUserRoutes(RepositoryProvider.provideBlogUserRepository())
 
     routing {
         get("/") {
