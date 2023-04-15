@@ -1,14 +1,18 @@
 package com.example.db
 
-import com.example.db.schemas.UserTable
-import com.example.db.schemas.companySchema.CompanyBranchTable
-import com.example.db.schemas.companySchema.CompanyDbTable
-import com.example.db.schemas.customers.CustomerTable
-import com.example.db.schemas.invoice.InvoiceTable
-import com.example.db.schemas.orders.OrdersTable
-import com.example.db.schemas.productsSchema.ProductsTable
-import com.example.db.schemas.productsSchema.PurchasedProductsTable
-import com.example.db.schemas.sales.SalesTable
+import com.example.db.schemas.blogs.comment.CommentTable
+import com.example.db.schemas.blogs.likes.LikeTable
+import com.example.db.schemas.blogs.story.StoryTable
+import com.example.db.schemas.blogs.users.BlogUserTable
+import com.example.db.schemas.invetorysystem.companySchema.CompanyBranchTable
+import com.example.db.schemas.invetorysystem.companySchema.CompanyDbTable
+import com.example.db.schemas.invetorysystem.customers.CustomerTable
+import com.example.db.schemas.invetorysystem.invoice.InvoiceTable
+import com.example.db.schemas.invetorysystem.orders.OrdersTable
+import com.example.db.schemas.invetorysystem.productsSchema.ProductsTable
+import com.example.db.schemas.invetorysystem.productsSchema.PurchasedProductsTable
+import com.example.db.schemas.invetorysystem.sales.SalesTable
+import com.example.db.schemas.invetorysystem.users.InvetoryUserTable
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import kotlinx.coroutines.Dispatchers
@@ -23,7 +27,7 @@ object DataBaseFactory {
     fun init() {
         Database.connect(hikari())
         transaction {
-            SchemaUtils.create(UserTable)
+            SchemaUtils.create(InvetoryUserTable)
             SchemaUtils.create(ProductsTable)
             SchemaUtils.create(PurchasedProductsTable)
             SchemaUtils.create(CompanyDbTable)
@@ -32,6 +36,10 @@ object DataBaseFactory {
             SchemaUtils.create(InvoiceTable)
             SchemaUtils.create(OrdersTable)
             SchemaUtils.create(SalesTable)
+            SchemaUtils.create(BlogUserTable)
+            SchemaUtils.create(CommentTable)
+            SchemaUtils.create(LikeTable)
+            SchemaUtils.create(StoryTable)
         }
     }
 
@@ -42,8 +50,8 @@ object DataBaseFactory {
         val password = uri.userInfo.split(":").toTypedArray()[1]
 
         config.driverClassName = System.getenv("JDBC_DRIVER")
-        config.jdbcUrl = System.getenv("LOCAL_DB_URL") //when pushing to main remove this
-//        config.jdbcUrl = "jdbc:postgresql://" + uri.host + ":" + uri.port + uri.path + "?sslmode=require" + "&user=$username&password=$password"  //when pushing to main change this
+//        config.jdbcUrl = System.getenv("LOCAL_DB_URL") //when pushing to main remove this
+        config.jdbcUrl = "jdbc:postgresql://" + uri.host + ":" + uri.port + uri.path + "?sslmode=require" + "&user=$username&password=$password"  //when pushing to main change this
 
         config.maximumPoolSize = 3
         config.isAutoCommit = false

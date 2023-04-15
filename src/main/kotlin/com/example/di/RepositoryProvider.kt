@@ -1,39 +1,47 @@
 package com.example.di
 
-import com.example.repository.auth.AuthRepository
-import com.example.repository.auth.AuthRepositoryImpl
-import com.example.repository.branches.CompanyBranchRepository
-import com.example.repository.branches.CompanyBranchRepositoryImpl
-import com.example.repository.company.CompanyRepository
-import com.example.repository.company.CompanyRepositoryImpl
-import com.example.repository.customer.CustomerRepository
-import com.example.repository.customer.CustomerRepositoryImpl
-import com.example.repository.invoice.InvoiceRepository
-import com.example.repository.invoice.InvoiceRepositoryImpl
-import com.example.repository.orders.OrdersRepository
-import com.example.repository.orders.OrdersRepositoryImpl
-import com.example.repository.products.ProductsRepository
-import com.example.repository.products.ProductsRepositoryImpl
-import com.example.repository.sales.SalesRepository
-import com.example.repository.sales.SalesRepositoryImpl
-import com.example.repository.staff.StaffRepository
-import com.example.repository.staff.StaffRepositoryImpl
-import com.example.repository.user.UserRepository
-import com.example.repository.user.UserRepositoryImpl
-import com.example.service.auth.AuthServiceImpl
-import com.example.service.company.CompanyServiceImpl
-import com.example.service.company.companyBranch.CompanyBranchServiceImpl
-import com.example.service.customer.CustomerServiceImpl
-import com.example.service.invoice.InvoiceServiceImpl
-import com.example.service.orders.OrdersServiceImpl
-import com.example.service.products.ProductsServiceImpl
-import com.example.service.sales.SalesServiceImpl
-import com.example.service.staff.StaffServiceImpl
-import com.example.service.user.UserServiceImpl
+import com.example.repository.blogs.story.StoryRepository
+import com.example.repository.blogs.story.StoryRepositoryImpl
+import com.example.repository.blogs.user.BlogUserRepository
+import com.example.repository.blogs.user.BlogUserRepositoryImpl
+import com.example.repository.inventorysystem.auth.AuthRepository
+import com.example.repository.inventorysystem.auth.AuthRepositoryImpl
+import com.example.repository.inventorysystem.branches.CompanyBranchRepository
+import com.example.repository.inventorysystem.branches.CompanyBranchRepositoryImpl
+import com.example.repository.inventorysystem.company.CompanyRepository
+import com.example.repository.inventorysystem.company.CompanyRepositoryImpl
+import com.example.repository.inventorysystem.customer.CustomerRepository
+import com.example.repository.inventorysystem.customer.CustomerRepositoryImpl
+import com.example.repository.inventorysystem.invoice.InvoiceRepository
+import com.example.repository.inventorysystem.invoice.InvoiceRepositoryImpl
+import com.example.repository.inventorysystem.orders.OrdersRepository
+import com.example.repository.inventorysystem.orders.OrdersRepositoryImpl
+import com.example.repository.inventorysystem.products.ProductsRepository
+import com.example.repository.inventorysystem.products.ProductsRepositoryImpl
+import com.example.repository.inventorysystem.sales.SalesRepository
+import com.example.repository.inventorysystem.sales.SalesRepositoryImpl
+import com.example.repository.inventorysystem.staff.StaffRepository
+import com.example.repository.inventorysystem.staff.StaffRepositoryImpl
+import com.example.repository.inventorysystem.user.InventoryUserRepository
+import com.example.repository.inventorysystem.user.InventoryUserRepositoryImpl
+import com.example.service.blogs.story.StoryServiceImpl
+import com.example.service.blogs.user.BlogUserServiceImpl
+import com.example.service.inventorysystem.auth.AuthServiceImpl
+import com.example.service.inventorysystem.company.CompanyServiceImpl
+import com.example.service.inventorysystem.company.companyBranch.CompanyBranchServiceImpl
+import com.example.service.inventorysystem.customer.CustomerServiceImpl
+import com.example.service.inventorysystem.invoice.InvoiceServiceImpl
+import com.example.service.inventorysystem.orders.OrdersServiceImpl
+import com.example.service.inventorysystem.products.ProductsServiceImpl
+import com.example.service.inventorysystem.sales.SalesServiceImpl
+import com.example.service.inventorysystem.staff.StaffServiceImpl
+import com.example.service.inventorysystem.user.InventoryUserServiceImpl
 
 object RepositoryProvider {
+
+//    Inventory system repositories
     fun provideAuthRepository(): AuthRepository = AuthRepositoryImpl(AuthServiceImpl())
-    fun provideUserRepository(): UserRepository = UserRepositoryImpl(UserServiceImpl())
+    fun provideUserRepository(): InventoryUserRepository = InventoryUserRepositoryImpl(InventoryUserServiceImpl())
     fun provideProductsRepository(): ProductsRepository = ProductsRepositoryImpl(ProductsServiceImpl())
     fun provideCompanyRepository(): CompanyRepository = CompanyRepositoryImpl(CompanyServiceImpl())
     fun provideCompanyBranchRepository(): CompanyBranchRepository = CompanyBranchRepositoryImpl(CompanyBranchServiceImpl())
@@ -42,4 +50,8 @@ object RepositoryProvider {
     fun provideOrdersRepository(): OrdersRepository = OrdersRepositoryImpl(OrdersServiceImpl())
     fun provideSalesRepository(): SalesRepository = SalesRepositoryImpl(SalesServiceImpl())
     fun provideStaffRepository(): StaffRepository = StaffRepositoryImpl(StaffServiceImpl())
+
+//    Blog repositories
+    fun provideStoryRepository(): StoryRepository = StoryRepositoryImpl(StoryServiceImpl())
+    fun provideBlogUserRepository(): BlogUserRepository = BlogUserRepositoryImpl(BlogUserServiceImpl())
 }

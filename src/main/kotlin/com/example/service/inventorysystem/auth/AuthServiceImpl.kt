@@ -1,0 +1,46 @@
+package com.example.service.inventorysystem.auth
+
+import com.example.db.DataBaseFactory.dbQuery
+import com.example.db.extensions.toUser
+import com.example.db.schemas.invetorysystem.users.InvetoryUserTable
+import com.example.models.inventorysystem.auth.CreateUserParams
+import com.example.models.inventorysystem.user.InventoryUser
+import com.example.security.hash
+import org.jetbrains.exposed.sql.and
+import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.select
+import org.jetbrains.exposed.sql.statements.InsertStatement
+
+class AuthServiceImpl : AuthService {
+    override suspend fun registerUser(params: CreateUserParams): InventoryUser? {
+        var statement: InsertStatement<Number>? = null
+        dbQuery {
+            statement = InvetoryUserTable.insert {
+                it[email] = params.email
+                it[password] = hash(params.password)
+                it[fullName] = params.fullName
+                it[joinDate] = params.joinDate
+                it[isAdmin] = params.isAdmin
+                it[role] = params.role
+                it[idNo] = params.idNo
+                it[avatar] = params.avatar
+            }
+        }
+
+        return statement?.resultedValues?.get(0).toUser()
+    }
+
+    override suspend fun loginUser(email: String, password: String): InventoryUser? {
+        val hashedPassword = hash(password)
+        val userRow = dbQuery { InvetoryUserTable.select { InvetoryUserTable.email eq email and (InvetoryUserTable.password eq hashedPassword) }.firstOrNull() }
+        return userRow.toUser()
+    }
+
+    override suspend fun findUserByEmail(email: String): InventoryUser? {
+        val user = dbQuery {
+            InvetoryUserTable.select { InvetoryUserTable.email.eq(email) }
+                .map { it.toUser() }.singleOrNull()
+        }
+        return user
+    }
+}

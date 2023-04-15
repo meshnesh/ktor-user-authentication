@@ -1,37 +1,44 @@
 package com.example.db.extensions
 
-import com.example.db.schemas.UserTable
-import com.example.db.schemas.companySchema.CompanyBranchTable
-import com.example.db.schemas.companySchema.CompanyDbTable
-import com.example.db.schemas.customers.CustomerTable
-import com.example.db.schemas.invoice.InvoiceTable
-import com.example.db.schemas.orders.OrdersTable
-import com.example.db.schemas.productsSchema.ProductsTable
-import com.example.db.schemas.sales.SalesTable
-import com.example.db.schemas.staff.StaffTable
-import com.example.models.company.CompanyPayload
-import com.example.models.company.companyBranch.CompanyBranchPayload
-import com.example.models.customers.CustomerPayload
-import com.example.models.invoices.InvoicePayload
-import com.example.models.orders.OrdersPayload
-import com.example.models.product.AvailableProductsPayload
-import com.example.models.sales.SalesPayload
-import com.example.models.staff.CompanyStaff
-import com.example.models.user.User
+import com.example.db.schemas.blogs.comment.CommentTable
+import com.example.db.schemas.blogs.story.StoryTable
+import com.example.db.schemas.blogs.users.BlogUserTable
+import com.example.db.schemas.invetorysystem.companySchema.CompanyBranchTable
+import com.example.db.schemas.invetorysystem.companySchema.CompanyDbTable
+import com.example.db.schemas.invetorysystem.customers.CustomerTable
+import com.example.db.schemas.invetorysystem.invoice.InvoiceTable
+import com.example.db.schemas.invetorysystem.orders.OrdersTable
+import com.example.db.schemas.invetorysystem.productsSchema.ProductsTable
+import com.example.db.schemas.invetorysystem.sales.SalesTable
+import com.example.db.schemas.invetorysystem.staff.StaffTable
+import com.example.db.schemas.invetorysystem.users.InvetoryUserTable
+import com.example.models.blogs.comment.Comment
+import com.example.models.blogs.story.Story
+import com.example.models.blogs.users.AddStoryPayload
+import com.example.models.blogs.users.BlogUser
+import com.example.models.inventorysystem.company.CompanyPayload
+import com.example.models.inventorysystem.company.companyBranch.CompanyBranchPayload
+import com.example.models.inventorysystem.customers.CustomerPayload
+import com.example.models.inventorysystem.invoices.InvoicePayload
+import com.example.models.inventorysystem.orders.OrdersPayload
+import com.example.models.inventorysystem.product.AvailableProductsPayload
+import com.example.models.inventorysystem.sales.SalesPayload
+import com.example.models.inventorysystem.staff.CompanyStaff
+import com.example.models.inventorysystem.user.InventoryUser
 import org.jetbrains.exposed.sql.ResultRow
 
-fun ResultRow?.toUser(): User? {
+fun ResultRow?.toUser(): InventoryUser? {
     return if (this == null) null
-    else User(
-        id = this[UserTable.id],
-        fullName = this[UserTable.fullName],
-        avatar = this[UserTable.avatar],
-        email = this[UserTable.email],
-        createdAt = this[UserTable.createdAt].toString(),
-        idNo = this[UserTable.idNo],
-        isAdmin = this[UserTable.isAdmin],
-        role = this[UserTable.role],
-        joinDate = this[UserTable.joinDate]
+    else InventoryUser(
+        id = this[InvetoryUserTable.id],
+        fullName = this[InvetoryUserTable.fullName],
+        avatar = this[InvetoryUserTable.avatar],
+        email = this[InvetoryUserTable.email],
+        createdAt = this[InvetoryUserTable.createdAt].toString(),
+        idNo = this[InvetoryUserTable.idNo],
+        isAdmin = this[InvetoryUserTable.isAdmin],
+        role = this[InvetoryUserTable.role],
+        joinDate = this[InvetoryUserTable.joinDate]
     )
 }
 
@@ -69,8 +76,8 @@ fun ResultRow?.toAvailableProducts(): AvailableProductsPayload? {
 }
 
 fun ResultRow?.toCompany(): CompanyPayload? {
-    return if (this==null) null
-    else CompanyPayload (
+    return if (this == null) null
+    else CompanyPayload(
         companyId = this[CompanyDbTable.companyId],
         userId = this[CompanyDbTable.userId],
         companyName = this[CompanyDbTable.companyName],
@@ -80,8 +87,8 @@ fun ResultRow?.toCompany(): CompanyPayload? {
 }
 
 fun ResultRow?.toCompanyBranch(): CompanyBranchPayload? {
-    return if (this==null) null
-    else CompanyBranchPayload (
+    return if (this == null) null
+    else CompanyBranchPayload(
         companyId = this[CompanyBranchTable.companyId],
         branchId = this[CompanyBranchTable.branchId],
         branchName = this[CompanyBranchTable.branchName],
@@ -90,8 +97,8 @@ fun ResultRow?.toCompanyBranch(): CompanyBranchPayload? {
 }
 
 fun ResultRow?.toOrders(): OrdersPayload? {
-    return if (this==null) null
-    else OrdersPayload (
+    return if (this == null) null
+    else OrdersPayload(
         companyId = this[OrdersTable.companyId],
         orderId = this[OrdersTable.orderId],
         staffId = this[OrdersTable.staffId],
@@ -103,8 +110,8 @@ fun ResultRow?.toOrders(): OrdersPayload? {
 }
 
 fun ResultRow?.toInvoice(): InvoicePayload? {
-    return if (this==null) null
-    else InvoicePayload (
+    return if (this == null) null
+    else InvoicePayload(
         companyId = this[InvoiceTable.companyId],
         staffId = this[InvoiceTable.staffId],
         invoiceId = this[InvoiceTable.invoiceId],
@@ -120,8 +127,8 @@ fun ResultRow?.toInvoice(): InvoicePayload? {
 }
 
 fun ResultRow?.toSales(): SalesPayload? {
-    return if (this==null) null
-    else SalesPayload (
+    return if (this == null) null
+    else SalesPayload(
         companyId = this[SalesTable.companyId],
         staffId = this[SalesTable.staffId],
         orderId = this[SalesTable.orderId],
@@ -134,12 +141,77 @@ fun ResultRow?.toSales(): SalesPayload? {
 }
 
 fun ResultRow?.toCustomer(): CustomerPayload? {
-    return if (this==null) null
-    else CustomerPayload (
+    return if (this == null) null
+    else CustomerPayload(
         companyId = this[CustomerTable.companyId],
         customerId = this[CustomerTable.customerId],
         customerName = this[CustomerTable.customerName],
         customerPhoneNumber = this[CustomerTable.customerPhoneNumber],
         customerAddress = this[CustomerTable.customerAddress]
+    )
+}
+
+//Blogs section
+fun ResultRow?.toAddStory(): AddStoryPayload? {
+    return if (this == null) null
+    else AddStoryPayload (
+        id = this[StoryTable.id],
+        userId = this[StoryTable.userId],
+        title = this[StoryTable.title],
+        content = this[StoryTable.content],
+        isDraft = this[StoryTable.isDraft],
+        isUpdated = this[StoryTable.isUpdated],
+        createdAt = this[StoryTable.createdAt].toString()
+    )
+}
+fun ResultRow?.toStory(): Story? {
+    return if (this == null) null
+    else Story(
+        id = this[StoryTable.id],
+        title = this[StoryTable.title],
+        content = this[StoryTable.content],
+        isDraft = this[StoryTable.isDraft],
+        isUpdated = this[StoryTable.isUpdated],
+        createdAt = this[StoryTable.createdAt].toString()
+    )
+}
+
+fun ResultRow?.toStoryJoinedWithUser(): Story? {
+    return if (this == null) null
+    else Story(
+        id = this[StoryTable.id],
+        blogUser = BlogUser(
+            id = this[BlogUserTable.id],
+            fullName = this[BlogUserTable.fullName],
+            avatar = this[BlogUserTable.avatar],
+            email = this[BlogUserTable.email],
+            createdAt = this[BlogUserTable.createdAt].toString()
+        ),
+        title = this[StoryTable.title],
+        content = this[StoryTable.content],
+        isDraft = this[StoryTable.isDraft],
+        createdAt = this[StoryTable.createdAt].toString()
+    )
+}
+
+fun ResultRow?.toComment(): Comment? {
+    return if (this == null) null
+    else Comment(
+        id = this[CommentTable.id],
+        userId = this[CommentTable.userId],
+        storyId = this[CommentTable.storyId],
+        comment = this[CommentTable.comment],
+        createdAt = this[CommentTable.createdAt].toString()
+    )
+}
+
+fun ResultRow?.toBlogUser(): BlogUser? {
+    return if (this == null) null
+    else BlogUser(
+        id = this[BlogUserTable.id],
+        fullName = this[BlogUserTable.fullName],
+        avatar = this[BlogUserTable.avatar],
+        email = this[BlogUserTable.email],
+        createdAt = this[BlogUserTable.createdAt].toString()
     )
 }
