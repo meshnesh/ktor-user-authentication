@@ -13,7 +13,7 @@ import io.ktor.server.routing.*
 
 fun Application.configureStoryRoutes(repository: StoryRepository) {
     routing {
-        authenticate {
+//        authenticate {
             route("story") {
                 get("my/{page}") {
                     val page = call.parameters["page"]?.toIntOrNull() ?: DEFAULT_PAGE_START
@@ -55,6 +55,6 @@ fun Application.configureStoryRoutes(repository: StoryRepository) {
                     call.respond(result.statusCode, result)
                 }
             }
-        }
+//        }
     }
 }
