@@ -1,10 +1,8 @@
 package com.example.models.blogs.story
 
-import com.example.models.blogs.users.BlogUser
-
-data class Story(
+data class AddStory(
     val id: Int,
-    val blogUser: BlogUser? = null,
+    val userId: Int,
     var title: String,
     var shortDescription: String,
     var content: String,

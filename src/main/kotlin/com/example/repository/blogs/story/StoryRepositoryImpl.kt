@@ -18,6 +18,11 @@ class StoryRepositoryImpl(
         return BaseResponse.SuccessResponse(data = storyService.getAllStories(page, limit), message = SUCCESS)
     }
 
+    override suspend fun getStory(storyId: Int): BaseResponse<Any> {
+        val story = storyService.getStory(storyId)
+        return BaseResponse.SuccessResponse(data = story, message = SUCCESS)
+    }
+
     override suspend fun add(userId: Int, storyParams: StoryParams): BaseResponse<Any> {
         val story = storyService.add(userId, storyParams)
         return if (story != null) {

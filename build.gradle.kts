@@ -47,6 +47,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1")
     implementation("io.ktor:ktor-server-status-pages:$ktor_version")
 
+    implementation("io.ktor:ktor-server-cors:$ktor_version")
+
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
 }

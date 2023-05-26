@@ -13,7 +13,7 @@ import io.ktor.server.routing.*
 
 fun Application.configureStoryRoutes(repository: StoryRepository) {
     routing {
-//        authenticate {
+        authenticate {
             route("story") {
                 get("my/{page}") {
                     val page = call.parameters["page"]?.toIntOrNull() ?: DEFAULT_PAGE_START
@@ -26,6 +26,12 @@ fun Application.configureStoryRoutes(repository: StoryRepository) {
                     val page = call.parameters["page"]?.toIntOrNull() ?: DEFAULT_PAGE_START
                     val limit = call.request.queryParameters["limit"]?.toIntOrNull() ?: DEFAULT_LIMIT_SIZE
                     val result = repository.getAllStories(page, limit)
+                    call.respond(result.statusCode, result)
+                }
+
+                get("{story_id}") {
+                    val storyId = call.parameters["story_id"]?.toIntOrNull() ?: -1
+                    val result = repository.getStory(storyId)
                     call.respond(result.statusCode, result)
                 }
 
@@ -55,6 +61,6 @@ fun Application.configureStoryRoutes(repository: StoryRepository) {
                     call.respond(result.statusCode, result)
                 }
             }
-//        }
+        }
     }
 }

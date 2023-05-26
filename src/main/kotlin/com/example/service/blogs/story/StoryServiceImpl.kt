@@ -10,8 +10,8 @@ import com.example.db.schemas.blogs.likes.LikeTable
 import com.example.db.schemas.blogs.story.StoryTable
 import com.example.db.schemas.blogs.users.BlogUserTable
 import com.example.models.blogs.comment.Comment
+import com.example.models.blogs.story.AddStory
 import com.example.models.blogs.story.Story
-import com.example.models.blogs.users.AddStoryPayload
 import com.example.models.common.PaginatedResult
 import com.example.routes.blogs.story.StoryParams
 import org.jetbrains.exposed.sql.*
@@ -19,8 +19,14 @@ import org.jetbrains.exposed.sql.statements.InsertStatement
 
 class StoryServiceImpl : StoryService {
 
-    override suspend fun get(id: Int): Story? {
+    override suspend fun getStory(id: Int): Story? {
         val storyRow = DataBaseFactory.dbQuery { StoryTable.select { StoryTable.id eq id }.first() }
+        val stories = DataBaseFactory.dbQuery {
+            StoryTable
+                .innerJoin(BlogUserTable, { BlogUserTable.id }, { StoryTable.userId })
+                .selectAll().orderBy(StoryTable.createdAt, SortOrder.DESC)
+                .mapNotNull { it.toStoryJoinedWithUser() }
+        }
         return storyRow.toStory()
     }
 
@@ -67,7 +73,7 @@ class StoryServiceImpl : StoryService {
         }
     }
 
-    override suspend fun add(userId: Int, storyParams: StoryParams): AddStoryPayload? {
+    override suspend fun add(userId: Int, storyParams: StoryParams): AddStory? {
         var statement: InsertStatement<Number>? = null
         DataBaseFactory.dbQuery {
 
@@ -76,7 +82,10 @@ class StoryServiceImpl : StoryService {
             statement = StoryTable.insert {
                 it[this.userId] = userRow.toBlogUser()!!.id
                 it[title] = storyParams.title
+                it[shortDescription] = storyParams.shortDescription
                 it[content] = storyParams.content
+                it[coverImgUrl] = storyParams.coverImgUrl
+                it[category] = storyParams.category
                 it[isDraft] = storyParams.isDraft
                 it[isUpdated] = storyParams.isUpdated
             }

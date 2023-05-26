@@ -16,7 +16,9 @@ import com.example.routes.inventorysystem.sale.configureSalesRoutes
 import com.example.routes.inventorysystem.staff.configureStaffRoutes
 import com.example.routes.inventorysystem.user.configureUserRoutes
 import com.example.security.configureSecurity
+import io.ktor.http.*
 import io.ktor.server.application.*
+import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
@@ -45,6 +47,15 @@ import io.ktor.server.routing.*
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
 fun Application.module() {
+    install(CORS) {
+        allowMethod(HttpMethod.Options)
+        allowMethod(HttpMethod.Post)
+        allowMethod(HttpMethod.Get)
+        allowHeader(HttpHeaders.AccessControlAllowOrigin)
+        allowHeader(HttpHeaders.ContentType)
+        allowHeader(HttpHeaders.Authorization)
+        anyHost()
+    }
     configureDatabase()
     configureContentNegotiation()
     configureSecurity()

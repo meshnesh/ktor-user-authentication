@@ -13,8 +13,8 @@ import com.example.db.schemas.invetorysystem.sales.SalesTable
 import com.example.db.schemas.invetorysystem.staff.StaffTable
 import com.example.db.schemas.invetorysystem.users.InvetoryUserTable
 import com.example.models.blogs.comment.Comment
+import com.example.models.blogs.story.AddStory
 import com.example.models.blogs.story.Story
-import com.example.models.blogs.users.AddStoryPayload
 import com.example.models.blogs.users.BlogUser
 import com.example.models.inventorysystem.company.CompanyPayload
 import com.example.models.inventorysystem.company.companyBranch.CompanyBranchPayload
@@ -152,24 +152,31 @@ fun ResultRow?.toCustomer(): CustomerPayload? {
 }
 
 //Blogs section
-fun ResultRow?.toAddStory(): AddStoryPayload? {
+fun ResultRow?.toAddStory(): AddStory? {
     return if (this == null) null
-    else AddStoryPayload (
+    else AddStory (
         id = this[StoryTable.id],
         userId = this[StoryTable.userId],
         title = this[StoryTable.title],
         content = this[StoryTable.content],
+        shortDescription = this[StoryTable.shortDescription],
+        category = this[StoryTable.category],
+        coverImgUrl = this[StoryTable.coverImgUrl],
         isDraft = this[StoryTable.isDraft],
         isUpdated = this[StoryTable.isUpdated],
         createdAt = this[StoryTable.createdAt].toString()
     )
 }
+
 fun ResultRow?.toStory(): Story? {
     return if (this == null) null
     else Story(
         id = this[StoryTable.id],
         title = this[StoryTable.title],
         content = this[StoryTable.content],
+        shortDescription = this[StoryTable.shortDescription],
+        category = this[StoryTable.category],
+        coverImgUrl = this[StoryTable.coverImgUrl],
         isDraft = this[StoryTable.isDraft],
         isUpdated = this[StoryTable.isUpdated],
         createdAt = this[StoryTable.createdAt].toString()
@@ -189,6 +196,9 @@ fun ResultRow?.toStoryJoinedWithUser(): Story? {
         ),
         title = this[StoryTable.title],
         content = this[StoryTable.content],
+        shortDescription = this[StoryTable.shortDescription],
+        category = this[StoryTable.category],
+        coverImgUrl = this[StoryTable.coverImgUrl],
         isDraft = this[StoryTable.isDraft],
         createdAt = this[StoryTable.createdAt].toString()
     )
