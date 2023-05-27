@@ -50,8 +50,8 @@ object DataBaseFactory {
         val password = uri.userInfo.split(":").toTypedArray()[1]
 
         config.driverClassName = System.getenv("JDBC_DRIVER")
-        config.jdbcUrl = System.getenv("LOCAL_DB_URL") //when pushing to main remove this
-//        config.jdbcUrl = "jdbc:postgresql://" + uri.host + ":" + uri.port + uri.path + "?sslmode=require" + "&user=$username&password=$password"  //when pushing to main change this
+//        config.jdbcUrl = System.getenv("LOCAL_DB_URL") //when pushing to main remove this
+        config.jdbcUrl = "jdbc:postgresql://" + uri.host + ":" + uri.port + uri.path + "?sslmode=require" + "&user=$username&password=$password"  //when pushing to main change this
 
         config.maximumPoolSize = 3
         config.isAutoCommit = false
