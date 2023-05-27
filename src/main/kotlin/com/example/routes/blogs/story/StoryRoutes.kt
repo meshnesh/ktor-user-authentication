@@ -43,6 +43,7 @@ fun Application.configureStoryRoutes(repository: StoryRepository) {
                 }
 
                 put("update/{id}") {
+                    val principal = call.principal<UserIdPrincipalForUser>()
                     val id = call.parameters["id"]?.toIntOrNull() ?: -1
                     val params = call.receive<Story>()
                     val result = repository.update(id, params)

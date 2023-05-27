@@ -15,6 +15,7 @@ import com.example.models.blogs.story.Story
 import com.example.models.common.PaginatedResult
 import com.example.routes.blogs.story.StoryParams
 import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.statements.InsertStatement
 
 class StoryServiceImpl : StoryService {
@@ -94,26 +95,23 @@ class StoryServiceImpl : StoryService {
     }
 
     override suspend fun update(id: Int, storyParams: Story): Boolean {
-//        var result = -1
-//        DataBaseFactory.dbQuery {
-//            result = StoryTable.update({ StoryTable.id eq id }) {
-//                it[userId] = storyParams.userId
-//                it[title] = storyParams.title
-//                it[content] = storyParams.content
-//                it[isDraft] = storyParams.isDraft
-//            }
-//        }
-//        return result == 1
-        return TODO()
+        var result = -1
+        DataBaseFactory.dbQuery {
+            result = StoryTable.update({ StoryTable.id eq id }) {
+                it[title] = storyParams.title
+                it[content] = storyParams.content
+                it[isDraft] = storyParams.isDraft
+            }
+        }
+        return result == 1
     }
 
     override suspend fun delete(storyId: Int): Boolean {
-//        var result = -1
-//        DataBaseFactory.dbQuery {
-//            result = StoryTable.deleteWhere { StoryTable.id eq storyId }
-//        }
-//        return result == 1
-        return TODO()
+        var result = -1
+        DataBaseFactory.dbQuery {
+            result = StoryTable.deleteWhere { StoryTable.id eq storyId }
+        }
+        return result == 1
     }
 
     override suspend fun like(userId: Int, storyId: Int): Boolean {
